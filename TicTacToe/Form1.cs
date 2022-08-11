@@ -51,44 +51,47 @@ namespace TicTacToe
                 switch(i)
                 {
                     case 0:
-                        combination = gameBoard[0] + gameBoard[4] + gameBoard[8];
-                        break;
-                    case 1:
-                        combination = gameBoard[2] + gameBoard[4] + gameBoard[6];
-                        break;
-                    case 2:
                         combination = gameBoard[0] + gameBoard[1] + gameBoard[2];
                         break;
-                    case 3:
+                    case 1:
                         combination = gameBoard[3] + gameBoard[4] + gameBoard[5];
                         break;
-                    case 4:
+                    case 2:
                         combination = gameBoard[6] + gameBoard[7] + gameBoard[8];
                         break;
-                    case 5:
+                    case 3:
                         combination = gameBoard[0] + gameBoard[3] + gameBoard[6];
                         break;
-                    case 6:
+                    case 4:
                         combination = gameBoard[1] + gameBoard[4] + gameBoard[7];
                         break;
+                    case 5:
+                        combination = gameBoard[2] + gameBoard[5] + gameBoard[8];
+                        break;
+                    case 6:
+                        combination = gameBoard[0] + gameBoard[4] + gameBoard[8];
+                        break;
                     case 7:
-                        combination = gameBoard[3] + gameBoard[5] + gameBoard[8];
+                        combination = gameBoard[2] + gameBoard[4] + gameBoard[6];
                         break;
 
                 }
 
-                
-                if(combination.Equals("OOO"))
-                {
-                    reset();
-                    MessageBox.Show("O venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-                }
-                else if(combination.Equals("XXX"))
-                {
-                    reset();
-                    MessageBox.Show("X venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                        if (combination.Equals("OOO"))
+                                                                  
+                        {
+                         
+                         reset();
+                         MessageBox.Show( label2.Text + "  venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                         o_win_count.Text = (Int16.Parse(o_win_count.Text) + 1).ToString();
+                        }
+                        else if(combination.Equals("XXX"))
+                        {
+                         reset();
+                         MessageBox.Show( label1.Text + " venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        x_win_count.Text = (Int16.Parse(x_win_count.Text) + 1).ToString();
+                        }
 
                 checkDraw();
             }
@@ -123,8 +126,10 @@ namespace TicTacToe
                 if (counter == 9)
                 {
                     reset();
+                    draw_count.Text = (Int16.Parse(draw_count.Text) + 1).ToString();
                     MessageBox.Show("Vocês empataram a partida!", "Temos um empate!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+
             }
         }
 
@@ -199,6 +204,30 @@ namespace TicTacToe
             gameBoard[8] = returnSymbol(currentTurn);
             button9.Text = gameBoard[8];
             checkForWinner();
+        }
+
+        private void o_win_count_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
+
+        private void sobreToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            MessageBox.Show("Feito por Matheus", "Obrigado por jogar!");
+        }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void novoJogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            o_win_count.Text = "0";
+            x_win_count.Text = "0";
+            draw_count.Text =  "0";
         }
 
         private void Form1_Load(object sender, EventArgs e)
