@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TicTacToe.Config;
 
 namespace TicTacToe
 {
     public partial class Form1 : Form
     {
 
-        String[] gameBoard = new string[9];
-        int currentTurn = 0;
+        TipoJogadores?[] gameBoard = new TipoJogadores?[16];
         static String player1, player2;
+
+        public int currentTurn = 0;
+
 
         public Form1()
         {
@@ -28,79 +31,131 @@ namespace TicTacToe
             player2 = n2;
         }
 
-        public String returnSymbol(int turn)
+        public TipoJogadores returnSymbol(int turn)
         {
-             if (turn % 2 == 0) 
-            {
-                return "O";
-            }
-            else 
-            {
-                return "X";
-            }
+            return (turn % 2 == 0) ? TipoJogadores.JogadorO : TipoJogadores.JogadorX;
+
+
+
         }
 
-       
-        public void checkForWinner() 
+        public Retorno findMatch()
         {
-            try { 
-            for (int i=0; i<8; i++) 
+            //                combination = gameBoard[0] + gameBoard[4] + gameBoard[8];
+            //                combination = gameBoard[2] + gameBoard[4] + gameBoard[6];
+            try
             {
-                String combination = "";
 
-                switch(i)
+
+                // diagonais ok
+                if (gameBoard[0] != null && gameBoard[0] == gameBoard[5] && gameBoard[0] == gameBoard[10] && gameBoard[0] == gameBoard[15])
+                    return new Retorno() { Sucesso = true, Tipo = gameBoard[0] };
+
+
+
+                if (gameBoard[3] != null && gameBoard[3] == gameBoard[6] && gameBoard[3] == gameBoard[9] && gameBoard[3] == gameBoard[12])
+                    return new Retorno() { Sucesso = true, Tipo = gameBoard[3] };
+
+
+                // i < 16 - mudança
+                for (int i = 0; i < 15; i++)
                 {
-                    case 0:
-                        combination = gameBoard[0] + gameBoard[1] + gameBoard[2];
-                        break;
-                    case 1:
-                        combination = gameBoard[3] + gameBoard[4] + gameBoard[5];
-                        break;
-                    case 2:
-                        combination = gameBoard[6] + gameBoard[7] + gameBoard[8];
-                        break;
-                    case 3:
-                        combination = gameBoard[0] + gameBoard[3] + gameBoard[6];
-                        break;
-                    case 4:
-                        combination = gameBoard[1] + gameBoard[4] + gameBoard[7];
-                        break;
-                    case 5:
-                        combination = gameBoard[2] + gameBoard[5] + gameBoard[8];
-                        break;
-                    case 6:
-                        combination = gameBoard[0] + gameBoard[4] + gameBoard[8];
-                        break;
-                    case 7:
-                        combination = gameBoard[2] + gameBoard[4] + gameBoard[6];
-                        break;
+                    // horizontal 
+                    // i    +   1 - mudança
+                    var valorInicial = i == 0 ? 0 : i + 2;
+                    if (gameBoard[valorInicial] != null && gameBoard[valorInicial] == gameBoard[valorInicial + 1] && gameBoard[valorInicial] == gameBoard[valorInicial + 2] && gameBoard[valorInicial] == gameBoard[valorInicial + 3])
+                        return new Retorno() { Sucesso = true, Tipo = gameBoard[valorInicial] };
+
+
+
+                    // vertical ok
+                    // combination = gameBoard[0] + gameBoard[3] + gameBoard[6];
+                    //combination = gameBoard[1] + gameBoard[4] + gameBoard[7];
+                    if (gameBoard[i] != null && gameBoard[i] == gameBoard[i + 4] && gameBoard[i] == gameBoard[i + 8] && gameBoard[i] == gameBoard[i + 12])
+                        return new Retorno() { Sucesso = true, Tipo = gameBoard[i] };
+
 
                 }
-
-
-                        if (combination.Equals("OOO"))
-                                                                  
-                        {
-                         
-                         reset();
-                         MessageBox.Show( label2.Text + "  venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                         o_win_count.Text = (Int16.Parse(o_win_count.Text) + 1).ToString();
-                        }
-                        else if(combination.Equals("XXX"))
-                        {
-                         reset();
-                         MessageBox.Show( label1.Text + " venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        x_win_count.Text = (Int16.Parse(x_win_count.Text) + 1).ToString();
-                        }
-
-                checkDraw();
-            }
             }
             catch { }
+            return new Retorno();
+        }
 
+        public void checkForWinner()
+        {
+
+
+            //    try { 
+            //    for (int i=0; i<8; i++) 
+            //    {
+            //        String combination = "";
+
+            //        switch(i)
+            //        {
+            //            case 0:
+            //                combination = gameBoard[0] + gameBoard[1] + gameBoard[2];
+            //                break;
+            //            case 1:
+            //                combination = gameBoard[3] + gameBoard[4] + gameBoard[5];
+            //                break;
+            //            case 2:
+            //                combination = gameBoard[6] + gameBoard[7] + gameBoard[8];
+            //                break;
+            //            case 3:
+            //                combination = gameBoard[0] + gameBoard[3] + gameBoard[6];
+            //                break;
+            //            case 4:
+            //                combination = gameBoard[1] + gameBoard[4] + gameBoard[7];
+            //                break;
+            //            case 5:
+            //                combination = gameBoard[2] + gameBoard[5] + gameBoard[8];
+            //                break;
+            //            case 6:
+            //                combination = gameBoard[0] + gameBoard[4] + gameBoard[8];
+            //                break;
+            //            case 7:
+            //                combination = gameBoard[2] + gameBoard[4] + gameBoard[6];
+            //                break;
+
+            //}
+            var retornoVencedor = findMatch();
+
+            if (retornoVencedor.Sucesso)
+            {
+                var jogadorVencedorCount = retornoVencedor.Tipo == TipoJogadores.JogadorO ? o_win_count : x_win_count;
+                var jogadorVencedorLabel = retornoVencedor.Tipo == TipoJogadores.JogadorO ? label2 : label1;
+                reset();
+                MessageBox.Show(jogadorVencedorLabel.Text + "  venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                jogadorVencedorCount.Text = (Int16.Parse(jogadorVencedorCount.Text) + 1).ToString();
             }
+            checkDraw();
 
-        
+
+            //if (combination.Equals("OOO"))
+
+            //            {
+
+            //             reset();
+            //             MessageBox.Show( label2.Text + "  venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //             o_win_count.Text = (Int16.Parse(o_win_count.Text) + 1).ToString();
+            //            }
+            //            else if(combination.Equals("XXX"))
+            //            {
+            //             reset();
+            //             MessageBox.Show( label1.Text + " venceu a partida!", "Temos um vencedor!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //            x_win_count.Text = (Int16.Parse(x_win_count.Text) + 1).ToString();
+            //            }
+
+            //    checkDraw();
+            //}
+            //}
+            //catch { }
+
+        }
+
+
+
+
         public void reset()
         {
             button1.Text = "";
@@ -112,18 +167,26 @@ namespace TicTacToe
             button7.Text = "";
             button8.Text = "";
             button9.Text = "";
-            gameBoard = new string[9];
+            button10.Text = "";
+            button11.Text = "";
+            button12.Text = "";
+            button13.Text = "";
+            button14.Text = "";
+            button15.Text = "";
+            button16.Text = "";
+            gameBoard = new TipoJogadores?[16];
             currentTurn = 0;
         }
 
         public void checkDraw()
         {
-            int counter = 0;
-            for (int i=0; i<gameBoard.Length; i++)
-            {
-                if (gameBoard[i] !=null) { counter++;}
 
-                if (counter == 9)
+            for (int i = 0; i < gameBoard.Length; i++)
+            {
+                if (gameBoard[i] == null)
+                    break;
+
+                if (i == 15)
                 {
                     reset();
                     draw_count.Text = (Int16.Parse(draw_count.Text) + 1).ToString();
@@ -133,89 +196,152 @@ namespace TicTacToe
             }
         }
 
-              
-        private void button1_Click(object sender, EventArgs e)
+        // Esse método retorna X ou O
+        private String GetJogador(TipoJogadores? tipo)
+        {
+
+
+            return tipo == TipoJogadores.JogadorX ? "X" : "O";
+
+
+        }
+
+        public void button1_Click(object sender, EventArgs e) // otimizar esses botões
         {
             currentTurn++;
             gameBoard[0] = returnSymbol(currentTurn);
-            button1.Text = gameBoard[0];
+            button1.Text = GetJogador(gameBoard[0]);
             checkForWinner();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e) // 4x4 para acertar ok
         {
             currentTurn++;
             gameBoard[1] = returnSymbol(currentTurn);
-            button2.Text = gameBoard[1];
+            button2.Text = GetJogador(gameBoard[1]);
             checkForWinner();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[2] = returnSymbol(currentTurn);
-            button3.Text = gameBoard[2];
+            button3.Text = GetJogador(gameBoard[2]);
             checkForWinner();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        public void button13_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[3] = returnSymbol(currentTurn);
-            button4.Text = gameBoard[3];
+            button13.Text = GetJogador(gameBoard[3]);
             checkForWinner();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[4] = returnSymbol(currentTurn);
-            button5.Text = gameBoard[4];
+            button4.Text = GetJogador(gameBoard[4]);
             checkForWinner();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        public void button5_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[5] = returnSymbol(currentTurn);
-            button6.Text = gameBoard[5];
+            button5.Text = GetJogador(gameBoard[5]);
             checkForWinner();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        public void button6_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[6] = returnSymbol(currentTurn);
-            button7.Text = gameBoard[6];
+            button6.Text = GetJogador(gameBoard[6]);
             checkForWinner();
         }
-
-        private void button8_Click(object sender, EventArgs e)
+        public void button14_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[7] = returnSymbol(currentTurn);
-            button8.Text = gameBoard[7];
+            button14.Text = GetJogador(gameBoard[7]);
             checkForWinner();
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        public void button7_Click(object sender, EventArgs e)
         {
             currentTurn++;
             gameBoard[8] = returnSymbol(currentTurn);
-            button9.Text = gameBoard[8];
+            button7.Text = GetJogador(gameBoard[8]);
             checkForWinner();
         }
+
+        public void button8_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[9] = returnSymbol(currentTurn);
+            button8.Text = GetJogador(gameBoard[9]);
+            checkForWinner();
+        }
+
+        public void button9_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[10] = returnSymbol(currentTurn);
+            button9.Text = GetJogador(gameBoard[10]);
+            checkForWinner();
+        }
+        public void button15_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[11] = returnSymbol(currentTurn);
+            button15.Text = GetJogador(gameBoard[11]);
+            checkForWinner();
+        }
+        public void button10_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[12] = returnSymbol(currentTurn);
+            button10.Text = GetJogador(gameBoard[12]);
+            checkForWinner();
+        }
+
+        public void button11_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[13] = returnSymbol(currentTurn);
+            button11.Text = GetJogador(gameBoard[13]);
+            checkForWinner();
+        }
+
+        public void button12_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[14] = returnSymbol(currentTurn);
+            button12.Text = GetJogador(gameBoard[14]);
+            checkForWinner();
+        }
+
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            currentTurn++;
+            gameBoard[15] = returnSymbol(currentTurn);
+            button16.Text = GetJogador(gameBoard[15]);
+            checkForWinner();
+        }
+
 
         private void o_win_count_Click(object sender, EventArgs e)
         {
 
         }
 
-       
 
         private void sobreToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Feito por Matheus", "Obrigado por jogar!");
+            MessageBox.Show("O objetivo do jogo é fazer uma sequência de três símbolos iguais, seja em linha vertical, horizontal ou diagonal, enquanto tenta impedir que seu adversário faça o mesmo.", "Objetivo do jogo");
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -227,8 +353,15 @@ namespace TicTacToe
         {
             o_win_count.Text = "0";
             x_win_count.Text = "0";
-            draw_count.Text =  "0";
+            draw_count.Text = "0";
+            reset();
         }
+
+        private void x_win_count_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -237,5 +370,8 @@ namespace TicTacToe
             label1.Text = player1;
             label2.Text = player2;
         }
+
     }
+
+
 }
