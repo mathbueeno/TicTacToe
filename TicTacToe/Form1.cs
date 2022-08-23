@@ -208,127 +208,127 @@ namespace TicTacToe
 
         public void button1_Click(object sender, EventArgs e) // otimizar esses botões
         {
-            currentTurn++;
-            gameBoard[0] = returnSymbol(currentTurn);
-            button1.Text = GetJogador(gameBoard[0]);
+            //currentTurn++;
+            //gameBoard[0] = returnSymbol(currentTurn);
+            button1.Text = GetJogador(gameBoard[0] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button2_Click(object sender, EventArgs e) // 4x4 para acertar ok
         {
-            currentTurn++;
-            gameBoard[1] = returnSymbol(currentTurn);
-            button2.Text = GetJogador(gameBoard[1]);
+            //currentTurn++;
+            //gameBoard[1] = returnSymbol(currentTurn);
+            button2.Text = GetJogador(gameBoard[1] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button3_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[2] = returnSymbol(currentTurn);
-            button3.Text = GetJogador(gameBoard[2]);
+            //currentTurn++;
+            //gameBoard[2] = returnSymbol(currentTurn);
+            button3.Text = GetJogador(gameBoard[2] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button13_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[3] = returnSymbol(currentTurn);
-            button13.Text = GetJogador(gameBoard[3]);
+            // currentTurn++;
+            //gameBoard[3] = returnSymbol(currentTurn);
+            button13.Text = GetJogador(gameBoard[3] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button4_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[4] = returnSymbol(currentTurn);
-            button4.Text = GetJogador(gameBoard[4]);
+            // currentTurn++;
+            // gameBoard[4] = returnSymbol(currentTurn);
+            button4.Text = GetJogador(gameBoard[4] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button5_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[5] = returnSymbol(currentTurn);
-            button5.Text = GetJogador(gameBoard[5]);
+            // currentTurn++;
+            // gameBoard[5] = returnSymbol(currentTurn);
+            button5.Text = GetJogador(gameBoard[5] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button6_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[6] = returnSymbol(currentTurn);
-            button6.Text = GetJogador(gameBoard[6]);
+            // currentTurn++;
+            // gameBoard[6] = returnSymbol(currentTurn);
+            button6.Text = GetJogador(gameBoard[6] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
         public void button14_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[7] = returnSymbol(currentTurn);
-            button14.Text = GetJogador(gameBoard[7]);
+            //currentTurn++;
+            //gameBoard[7] = returnSymbol(currentTurn);
+            button14.Text = GetJogador(gameBoard[7] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button7_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[8] = returnSymbol(currentTurn);
-            button7.Text = GetJogador(gameBoard[8]);
+            //currentTurn++;
+            //gameBoard[8] = returnSymbol(currentTurn);
+            button7.Text = GetJogador(gameBoard[8] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button8_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[9] = returnSymbol(currentTurn);
-            button8.Text = GetJogador(gameBoard[9]);
+            // currentTurn++;
+            //gameBoard[9] = returnSymbol(currentTurn);
+            button8.Text = GetJogador(gameBoard[9] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button9_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[10] = returnSymbol(currentTurn);
-            button9.Text = GetJogador(gameBoard[10]);
+            // currentTurn++;
+            // gameBoard[10] = returnSymbol(currentTurn);
+            button9.Text = GetJogador(gameBoard[10] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
         public void button15_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[11] = returnSymbol(currentTurn);
-            button15.Text = GetJogador(gameBoard[11]);
+            // currentTurn++;
+            // gameBoard[11] = returnSymbol(currentTurn);
+            button15.Text = GetJogador(gameBoard[11] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
         public void button10_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[12] = returnSymbol(currentTurn);
-            button10.Text = GetJogador(gameBoard[12]);
+            // currentTurn++;
+            //gameBoard[12] = returnSymbol(currentTurn);
+            button10.Text = GetJogador(gameBoard[12] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button11_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[13] = returnSymbol(currentTurn);
-            button11.Text = GetJogador(gameBoard[13]);
+            // currentTurn++;
+            // gameBoard[13] = returnSymbol(currentTurn);
+            button11.Text = GetJogador(gameBoard[13] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
         public void button12_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[14] = returnSymbol(currentTurn);
-            button12.Text = GetJogador(gameBoard[14]);
+            // currentTurn++;
+            // gameBoard[14] = returnSymbol(currentTurn);
+            button12.Text = GetJogador(gameBoard[14] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
 
         private void button16_Click(object sender, EventArgs e)
         {
-            currentTurn++;
-            gameBoard[15] = returnSymbol(currentTurn);
-            button16.Text = GetJogador(gameBoard[15]);
+            // currentTurn++;
+            // gameBoard[15] = returnSymbol(currentTurn);
+            button16.Text = GetJogador(gameBoard[15] = returnSymbol(currentTurn = currentTurn + 1));
             checkForWinner();
         }
 
